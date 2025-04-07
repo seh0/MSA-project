@@ -1,0 +1,6 @@
+rootProject.name = 'demo'
+
+include 'performance-service'
+include 'another-service'
+include 'client'
+include 'gateway'
