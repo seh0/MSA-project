@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import apiClient from "../apiClient";
 import { useNavigate } from "react-router-dom";
+import profileIMG from "../img/profile.PNG";
+
+import "./MyPage.css";
 
 function MyPage() {
   const [userInfo, setUserInfo] = useState(null);
@@ -9,6 +12,22 @@ function MyPage() {
   const [addressInput, setAddressInput] = useState("");
 
   const navigate = useNavigate();
+
+  const formatDate = (localDateTimeString) => {
+    const date = new Date(localDateTimeString);
+
+    const dateFormatter = new Intl.DateTimeFormat("ko-KR", {
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    });
+
+    let formattedDate = dateFormatter.format(date);
+    return formattedDate;
+  };
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -75,10 +94,12 @@ function MyPage() {
     setAddressInput(event.target.value);
   };
 
-  const cancelUpdate = () => {
-    setNameInput(userInfo.name);
-    setAddressInput(userInfo.address);
-    setIsEditing(false);
+  const editUserInfo = () => {
+    if (isEditing) {
+      setNameInput(userInfo.name);
+      setAddressInput(userInfo.address);
+    }
+    setIsEditing(!isEditing);
   };
 
   const deleteUser = async () => {
@@ -104,49 +125,123 @@ function MyPage() {
   };
 
   return (
-    <div>
+    <div className="my-page-container">
       {userInfo ? (
-        <div>
-          <h1>마이페이지</h1>
-          <p>이메일: {userInfo.email}</p>
-          <p>권한: {userInfo.role}</p>
+        <div className="my-page-content">
+          <div className="my-page-left-section">
+            <div className="my-page-profile-image-section">
+              <div className="my-page-profile-image-container">
+                <img
+                  src={profileIMG}
+                  alt="Profile"
+                  className="my-page-profile-image"
+                />
+              </div>
+              <p className="my-page-profile-name">{userInfo.name} 님</p>
+            </div>
 
-          {isEditing ? (
-            <div>
-              <div>
-                <label>이름:</label>
-                <input
-                  type="text"
-                  value={nameInput}
-                  onChange={nameChange}
-                />
-              </div>
-              <div>
-                <label>주소:</label>
-                <input
-                  type="text"
-                  value={addressInput}
-                  onChange={addressChange}
-                />
-              </div>
-              <button onClick={updateUserInfo}>수정 완료</button>
-              <button onClick={cancelUpdate}>취소</button>
+            <div className="my-page-action-buttons">
+              <button
+                onClick={editUserInfo}
+                className="my-page-btn-edit my-page-button"
+              >
+                정보 수정
+              </button>
             </div>
-          ) : (
-            <div>
-              <p>이름: {userInfo.name}</p>
-              <p>
-                주소:{" "}
-                {userInfo.address ? (
-                  userInfo.address
-                ) : (
-                  <span style={{ color: "blue" }}>주소를 등록해 주세요</span>
-                )}
-              </p>
-              <button onClick={() => setIsEditing(true)}>정보 수정</button>
-              <button onClick={deleteUser}>탈퇴</button>
+          </div>
+
+          <div className="my-page-right-section">
+            <h2>마이페이지</h2>
+            <table className="my-page-user-info-table">
+              <thead>
+                <th
+                  colSpan="2"
+                  style={{
+                    textAlign: "center",
+                    fontSize: "18px",
+                    fontWeight: "bold",
+                  }}
+                >
+                  내 정보
+                </th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>이메일</td>
+                  <td>{userInfo.email}</td>
+                </tr>
+                <tr>
+                  <td>이름</td>
+                  <td>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={nameInput}
+                        onChange={nameChange}
+                        className="my-page-input-field"
+                      />
+                    ) : (
+                      userInfo.name
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>주소</td>
+                  <td>
+                    {isEditing ? (
+                      <input
+                        type="text"
+                        value={addressInput}
+                        onChange={addressChange}
+                        className="my-page-input-field"
+                      />
+                    ) : userInfo.address ? (
+                      userInfo.address
+                    ) : (
+                      <span className="my-page-address-prompt">
+                        주소를 등록해 주세요
+                      </span>
+                    )}
+                  </td>
+                </tr>
+                <tr>
+                  <td>가입일</td>
+                  <td>{formatDate(userInfo.createdAt)}</td>
+                </tr>
+                <tr>
+                  <td>권한</td>
+                  <td>{userInfo.role}</td>
+                </tr>
+              </tbody>
+            </table>
+
+            {isEditing && (
+              <div className="my-page-action-buttons">
+                <div className="my-page-top-buttons">
+                  <button
+                    onClick={updateUserInfo}
+                    className="my-page-btn-save my-page-button"
+                  >
+                    수정 완료
+                  </button>
+                </div>
+                <button
+                  onClick={deleteUser}
+                  className="my-page-btn-delete my-page-button"
+                >
+                  탈퇴
+                </button>
+              </div>
+            )}
+            <h2>예매 목록</h2>
+            <div className="ticket-list">
+              <div>
+                <p>티켓1</p>
+                <p>티켓2</p>
+                <p>티켓3</p>
+              </div>
             </div>
-          )}
+          </div>
         </div>
       ) : (
         <p>로딩 중...</p>
