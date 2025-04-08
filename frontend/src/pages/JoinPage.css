@@ -1,0 +1,122 @@
+.join-page * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.join-page {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.join-container {
+  background: #ffffff;
+  padding: 40px 30px;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 60vw;
+  text-align: center;
+}
+
+.join-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 30px;
+  letter-spacing: 1px;
+}
+
+.join-page label {
+  display: block;
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px;
+  text-align: left;
+  margin-top: 15px; 
+}
+
+.join-page .input-group {
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.join-page input {
+  width: 100%;
+  padding: 14px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #f9f9f9;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.join-page input:focus {
+  border-color: #2575fc;
+  background-color: #e9f5ff;
+}
+
+.join-page .email-container,
+.join-page .auth-code-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.join-page .email-container input,
+.join-page .auth-code-container input {
+  width: 80%;
+  margin-right: 10px; 
+}
+
+.join-page .email-container button,
+.join-page .auth-code-container button {
+  width: 18%; 
+  font-size: 14px;
+}
+
+
+.join-page button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  background-color: #2575fc;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.join-page button:hover {
+  background-color: #6a11cb;
+}
+
+.join-page .error-message {
+  color: #e74c3c;
+  font-size: 14px;
+  margin-top: 10px;
+}
+
+.join-page .button-container {
+  margin-top: 20px;
+}
+
+.join-page button.btn-link {
+  background: none;
+  border: none;
+  color: #2575fc;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.join-page button.btn-link:hover {
+  color: #6a11cb;
+}

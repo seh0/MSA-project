@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import apiClient from "../apiClient";
-
-import "./Page.css";
+import "./JoinPage.css";
 
 function JoinPage() {
   const [email, setEmail] = useState("");
@@ -12,8 +10,8 @@ function JoinPage() {
   const [password, setPassword] = useState("");
   const [validationPassword, setValidationPassword] = useState("");
   const [name, setName] = useState("");
-  const navigate = useNavigate();
   const [errorMessage, setErrorMessage] = useState("");
+  const navigate = useNavigate();
 
   const handleSendAuthCode = async () => {
     try {
@@ -56,7 +54,7 @@ function JoinPage() {
       formData.append("password", password);
       formData.append("name", name);
 
-      const res = await apiClient.post('/api/users/register', formData);
+      const res = await apiClient.post("/api/users/register", formData);
 
       if (res.status === 200) {
         alert("회원가입 성공!");
@@ -69,62 +67,103 @@ function JoinPage() {
   };
 
   return (
-    <div className="Join">
-      <h1>회원 가입</h1>
-      <input
-        type="text"
-        name="name"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        placeholder="이름"
-        required
-      />
-      <input
-        type="email"
-        name="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="이메일"
-        required
-      />
-      <button onClick={handleSendAuthCode} disabled={emailVerified}>
-        인증요청
-      </button>
-      {!emailVerified && (
-        <div>
-          <div>
+    <div className="join-page">
+      <div className="join-container">
+        <h1 className="join-title">회원 가입</h1>
+        <form onSubmit={HandleRegister}>
+          <div className="input-group">
+            <label htmlFor="name">이름</label>
             <input
               type="text"
-              value={authCode}
-              onChange={(e) => setAuthCode(e.target.value)}
-              placeholder="인증번호 입력"
+              id="name"
+              name="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="이름"
+              required
             />
-            <button onClick={handleVerifyAuthCode}>인증 확인</button>
           </div>
-        </div>
-      )}
-      <input
-        type="password"
-        name="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="비밀번호"
-        required
-      />
-      <div>
-        <input
-          type="password"
-          value={validationPassword}
-          onChange={(e) => setValidationPassword(e.target.value)}
-          placeholder="비밀번호 확인"
-        />
-      </div>
-      {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-      <div className="button-container">
-        <button type="button" onClick={HandleRegister}>
-          가입
-        </button>
-        <button onClick={() => window.history.back()}>취소</button>
+
+          <div className="input-group">
+            <label htmlFor="email">이메일</label>
+            <div className="email-container">
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="이메일"
+                required
+              />
+              <button
+                type="button"
+                onClick={handleSendAuthCode}
+                disabled={emailVerified}
+              >
+                인증요청
+              </button>
+            </div>
+          </div>
+
+          {!emailVerified && (
+            <div className="input-group">
+              <label htmlFor="authCode">인증번호 입력</label>
+              <div className="auth-code-container">
+                <input
+                  type="text"
+                  id="authCode"
+                  value={authCode}
+                  onChange={(e) => setAuthCode(e.target.value)}
+                  placeholder="인증번호 입력"
+                />
+                <button type="button" onClick={handleVerifyAuthCode}>
+                  인증 확인
+                </button>
+              </div>
+            </div>
+          )}
+
+          <div className="input-group">
+            <label htmlFor="password">비밀번호</label>
+            <input
+              type="password"
+              id="password"
+              name="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="비밀번호"
+              required
+            />
+          </div>
+
+          <div className="input-group">
+            <label htmlFor="validationPassword">비밀번호 확인</label>
+            <input
+              type="password"
+              id="validationPassword"
+              value={validationPassword}
+              onChange={(e) => setValidationPassword(e.target.value)}
+              placeholder="비밀번호 확인"
+              required
+            />
+          </div>
+
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
+
+          <div className="button-container">
+            <button type="submit" className="btn-submit">
+              가입
+            </button>
+            <button
+              type="button"
+              onClick={() => navigate("/")}
+              className="btn-link"
+            >
+              취소
+            </button>
+          </div>
+        </form>
       </div>
     </div>
   );
