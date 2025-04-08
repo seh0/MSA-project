@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import apiClient from "../apiClient";
 import { useNavigate } from "react-router-dom";
 import profileIMG from "../img/profile.PNG";
+import Calendar from "../components/Calendar";
 
 import "./MyPage.css";
 
@@ -12,6 +13,12 @@ function MyPage() {
   const [addressInput, setAddressInput] = useState("");
 
   const navigate = useNavigate();
+
+  const [tickets] = useState([
+    { name: "티켓1", date: "2025. 4. 8. 오전 10:40", status: "A3" },
+    { name: "티켓2", date: "2025. 4. 10. 오후 5:00", status: "D2" },
+    { name: "티켓3", date: "2025. 4. 9. 오후 9:30", status: "B1" },
+  ]);
 
   const formatDate = (localDateTimeString) => {
     const date = new Date(localDateTimeString);
@@ -125,34 +132,35 @@ function MyPage() {
   };
 
   return (
-    <div className="my-page-container">
+    <div className="mypage-container">
       {userInfo ? (
-        <div className="my-page-content">
-          <div className="my-page-left-section">
-            <div className="my-page-profile-image-section">
-              <div className="my-page-profile-image-container">
+        <div className="mypage-content">
+          <div className="mypage-left-section">
+            <div className="mypage-profile-image-section">
+              <div className="mypage-profile-image-container">
                 <img
                   src={profileIMG}
                   alt="Profile"
-                  className="my-page-profile-image"
+                  className="mypage-profile-image"
                 />
               </div>
-              <p className="my-page-profile-name">{userInfo.name} 님</p>
+              <p className="mypage-profile-name">{userInfo.name} 님</p>
             </div>
 
-            <div className="my-page-action-buttons">
+            <div className="mypage-action-buttons">
               <button
                 onClick={editUserInfo}
-                className="my-page-btn-edit my-page-button"
+                className="mypage-btn-edit mypage-button"
               >
                 정보 수정
               </button>
             </div>
+            <Calendar />
           </div>
 
-          <div className="my-page-right-section">
+          <div className="mypage-right-section">
             <h2>마이페이지</h2>
-            <table className="my-page-user-info-table">
+            <table className="mypage-user-info-table">
               <thead>
                 <th
                   colSpan="2"
@@ -178,7 +186,7 @@ function MyPage() {
                         type="text"
                         value={nameInput}
                         onChange={nameChange}
-                        className="my-page-input-field"
+                        className="mypage-input-field"
                       />
                     ) : (
                       userInfo.name
@@ -193,12 +201,12 @@ function MyPage() {
                         type="text"
                         value={addressInput}
                         onChange={addressChange}
-                        className="my-page-input-field"
+                        className="mypage-input-field"
                       />
                     ) : userInfo.address ? (
                       userInfo.address
                     ) : (
-                      <span className="my-page-address-prompt">
+                      <span className="mypage-address-prompt">
                         주소를 등록해 주세요
                       </span>
                     )}
@@ -216,35 +224,41 @@ function MyPage() {
             </table>
 
             {isEditing && (
-              <div className="my-page-action-buttons">
-                <div className="my-page-top-buttons">
-                  <button
-                    onClick={updateUserInfo}
-                    className="my-page-btn-save my-page-button"
-                  >
-                    수정 완료
-                  </button>
-                </div>
+              <div className="mypage-edit-buttons">
+                <button
+                  onClick={updateUserInfo}
+                  className="mypage-btn-save mypage-button"
+                >
+                  저장
+                </button>
                 <button
                   onClick={deleteUser}
-                  className="my-page-btn-delete my-page-button"
+                  className="mypage-btn-delete mypage-button"
                 >
                   탈퇴
                 </button>
               </div>
             )}
-            <h2>예매 목록</h2>
+            <h2>예매 내역</h2>
             <div className="ticket-list">
-              <div>
-                <p>티켓1</p>
-                <p>티켓2</p>
-                <p>티켓3</p>
-              </div>
+              {tickets.map((ticket, index) => (
+                <div className="ticket-card" key={index}>
+                  <h3>{ticket.name}</h3>
+                  <p>
+                    <strong>시간:</strong> {ticket.date}
+                  </p>
+                  <p>
+                    <strong>좌석:</strong> {ticket.status}
+                  </p>
+                </div>
+              ))}
             </div>
           </div>
         </div>
       ) : (
-        <p>로딩 중...</p>
+        <div class="loader-container">
+          <div class="loader"></div>
+        </div>
       )}
     </div>
   );

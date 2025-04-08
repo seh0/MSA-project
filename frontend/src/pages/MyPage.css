@@ -1,4 +1,4 @@
-.my-page-container {
+.mypage-container {
   display: flex;
   justify-content: center;
   max-width: 80vw;
@@ -7,31 +7,31 @@
   min-height: 80vh;
 }
 
-.my-page-content {
+.mypage-content {
   display: flex;
   width: 100%;
   gap: 20px;
 }
 
-.my-page-user-info-table {
+.mypage-user-info-table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
 }
 
-.my-page-user-info-table th,
-.my-page-user-info-table td {
+.mypage-user-info-table th,
+.mypage-user-info-table td {
   padding: 12px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.my-page-user-info-table th {
+.mypage-user-info-table th {
   background-color: #f6ecf8;
   font-weight: bold;
 }
 
-.my-page-left-section {
+.mypage-left-section {
   flex: 3;
   display: flex;
   flex-direction: column;
@@ -41,20 +41,20 @@
   padding: 50px;
 }
 
-.my-page-right-section {
+.mypage-right-section {
   flex: 7;
   padding: 50px;
 }
 
-.my-page-right-section h2 {
+.mypage-right-section h2 {
   text-align: left;
 }
 
-.my-page-profile-image-section {
+.mypage-profile-image-section {
   text-align: center;
 }
 
-.my-page-profile-image-container {
+.mypage-profile-image-container {
   display: inline-block;
   width: 150px;
   height: 150px;
@@ -64,27 +64,20 @@
   margin-bottom: 10px;
 }
 
-.my-page-profile-image {
+.mypage-profile-image {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.my-page-action-buttons {
-  display: flex;
-  flex-direction: column;
+.mypage-edit-buttons {
   margin-top: 20px;
-  align-items: flex-end;
-  gap: 20px;
-}
-
-.my-page-top-buttons {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   justify-content: flex-end;
 }
 
-.my-page-button {
+.mypage-button {
   padding: 10px 20px;
   border: none;
   border-radius: 5px;
@@ -93,35 +86,35 @@
   width: auto;
 }
 
-.my-page-btn-edit {
+.mypage-btn-edit {
   background-color: white;
   border-radius: 10px;
   color: purple;
   border: 2px solid purple;
 }
 
-.my-page-btn-save {
+.mypage-btn-save {
   background-color: white;
   color: purple;
   border: 2px solid purple;
 }
 
-.my-page-btn-delete {
+.mypage-btn-delete {
   background-color: white;
   color: red;
   border: 2px solid red;
 }
 
-.my-page-address-prompt {
+.mypage-address-prompt {
   color: blue;
   font-weight: bold;
 }
 
-.my-page-button:hover {
-  transform: scale(0.9)
+.mypage-button:hover {
+  transform: scale(0.9);
 }
 
-.my-page-profile-name {
+.mypage-profile-name {
   margin-top: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -131,9 +124,39 @@
 
 .ticket-list {
   margin-top: 20px;
-  min-height: 30vh;
-  padding: 20px;
+  height: 40vh;
+  overflow-y: auto;
+  padding: 5px;
   border-radius: 10px;
   text-align: left;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.ticket-card {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 5px 20px;
+}
+
+.ticket-card:hover{
+  background-color: #ddd;
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
+
+.loader {
+  border: 8px solid #f0f0f0; 
+  border-top: 8px solid purple; 
+  border-radius: 50%; 
+  width: 50px; 
+  height: 50px; 
+  animation: spin 2s linear infinite; 
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
